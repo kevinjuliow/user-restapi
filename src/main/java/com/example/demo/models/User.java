@@ -29,4 +29,20 @@ public class User {
     public String getJob() {
         return job;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
 }
