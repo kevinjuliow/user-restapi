@@ -8,19 +8,21 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/v1/user")
 public class UserController {
 @Autowired
     private UserService userService;
 
-@PostMapping("/add")
-    public String createUser (@RequestBody User user){
+    @PostMapping()
+    public ResponseEntity<Void> createUser (@RequestBody User user) throws InvalidKeySpecException, NoSuchAlgorithmException {
     userService.saveUser(user);
-    return "New User Created";
+    return new ResponseEntity<Void>(HttpStatus.OK);
 }
 
 @GetMapping()
@@ -28,7 +30,7 @@ public class UserController {
     return userService.getAllUsers();
 }
 
-@PutMapping("/update/{id}")
+@PutMapping("/{id}")
     public ResponseEntity<String> updateUser (@PathVariable int id, @RequestBody User user){
     try {
         userService.updateUser(id , user);
@@ -39,8 +41,7 @@ public class UserController {
         );
     }
 }
-
-@DeleteMapping("/delete/{id}")
+@DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser (@PathVariable int id){
     try {
         userService.deleteUser(id);
